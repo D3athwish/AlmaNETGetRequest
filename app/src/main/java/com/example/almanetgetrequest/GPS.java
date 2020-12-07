@@ -4,14 +4,14 @@ import com.google.gson.annotations.SerializedName;
 
 public class GPS
 {
-    private String deviceLongitude;
-    private String deviceLatitude;
+    private String longitude;
+    private String latitude;
 
-    public String getDeviceLongitude() {
-        return deviceLongitude;
+    public String getLongitude(){
+        return longitude;
     }
 
-    public String getDeviceLatitude() {
-        return deviceLatitude;
+    public String getLatitude(){
+        return latitude;
     }
 }

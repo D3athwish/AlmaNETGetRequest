@@ -7,6 +7,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -26,9 +28,16 @@ public class MainActivity extends AppCompatActivity
 
         textViewResult = findViewById(R.id.text_view_result);
 
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://almanetapi.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
                 .build();
 
         AlmaNetAPI almaNetAPI = retrofit.create(AlmaNetAPI.class);
@@ -51,8 +60,8 @@ public class MainActivity extends AppCompatActivity
                 // Build content
                 for(GPS gps1 : gps){
                     String content = "";
-                    content += "Longitude: " + gps1.getDeviceLongitude() + "\n";
-                    content += "Latitude: " + gps1.getDeviceLatitude();
+                    content += "Longitude: " + gps1.getLongitude() + "\n";
+                    content += "Latitude: " + gps1.getLatitude();
 
                     textViewResult.append(content);
                 }
